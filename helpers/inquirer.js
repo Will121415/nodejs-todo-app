@@ -79,6 +79,31 @@ const todoListToDelete = async(todos = []) => {
     return id;
 }
 
+const todoListToCheck = async(todos = []) =>  {
+
+    const choices = todos.map(({id, desc, completedIn}, index) => {
+        return {
+            value: id,
+            name: `${++index}. `.green + `${desc}`,
+            checked: (completedIn) ? true : false
+        }
+    })
+
+    const questions = [
+        {
+            type: 'checkbox',
+            name: 'ids',
+            message: 'Seleccione las tareas a completar',
+            choices
+        }
+    ]
+
+    const {ids} = await inquirer.prompt( questions );
+
+    return ids;
+
+}
+
 const confirm = async(message) => {
 
     const questions = [
@@ -94,4 +119,4 @@ const confirm = async(message) => {
     return ok;
 }
 
-module.exports = { inquirerMenu, pause, readInput, todoListToDelete, confirm}
+module.exports = { inquirerMenu, pause, readInput, todoListToDelete, todoListToCheck, confirm }

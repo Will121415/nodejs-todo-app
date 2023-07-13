@@ -1,6 +1,6 @@
 require('colors');
 
-const {inquirerMenu, pause, readInput, todoListToDelete, confirm } = require('./helpers/inquirer');
+const {inquirerMenu, pause, readInput, todoListToDelete, todoListToCheck, confirm } = require('./helpers/inquirer');
 const { getTodos, saveTodo } = require('./helpers/methods');
 const Todos = require('./models/todos');
 
@@ -36,6 +36,11 @@ const main = async() => {
             case '4': {
                 const todoList = todos.getTodosByStatus(false);
                 todos.showTodoList(todoList);
+            }
+            break;
+            case '5': {
+                const ids = await todoListToCheck(todos.getTodos);
+                todos.toggleCompleted(ids);
             }
             break;
             case '6': {
